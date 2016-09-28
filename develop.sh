@@ -1,5 +1,23 @@
 #!/bin/bash
 
+#variables
+
+num="$1"
+port="$2"
+net="$3"
+
+if [ -z "$1" ]; then
+   num=4;
+fi
+
+if [ -z "$2" ]; then
+   port=1234;
+fi
+
+if [ -z "$3" ]; then
+   net=0;
+fi
+
 #sudo apt-get update &&
 #    apt-get install -y software-properties-common
 #    apt-apt-repository -y ppp:etherum/ethereum ;
@@ -16,21 +34,14 @@ bloc=$(cat ./bloc.json);
 #cd /etc/apt/source.d/
 #Error catching @n1c0
 
-#todo
-sudo geth --datadir ./noeud1 --networkid "3" --unlock 0 --password init bloc.json | grep "Listening, enode:"
- sudo geth --datadir ./noeud1 --networkid="3" --unlock 0 --password iaccount new | grep "Listening, enode:"
- sudo geth --datadir ./noeud2 --networkid "3" --unlock 0 --password iinit bloc.json | grep "Listening, enode:"
- sudo geth --datadir ./noeud2 --networkid="3" --unlock 0 --password iaccount new | grep "Listening, enode:"
- sudo geth --datadir ./noeud3 --networkid "3" --unlock 0 --password init bloc.json | grep "Listening, enode:"
- sudo geth --datadir ./noeud3 --networkid "3" --unlock 0 --password init bloc.json | grep "Listening, enode:"
- sudo geth --datadir ./noeud4 --networkid="3" --unlock 0 --password account new | grep "Listening, enode:"
- sudo geth --datadir ./noeud4 --networkid="3" --unlock 0 --password account new | grep "Listening, enode:"
-#-->todo
+for ((i=$num; i>=0; i--))
+do
+    sudo geth --datadir ./noeud$i --networkid "$net" --unlock 0 --password init bloc.json
+    sudo geth --datadir ./noeud$i --networkid="$net" --unlock 0 --password iaccount new
+    sudo geth --datadir ./noeud$i --networkid="$net" --port=$((port+i)) console &
+    echo "Lauching geth console on "$((port+i))
+done
 
- sudo geth --datadir ./noeud1 --networkid="3" --port="1234" console &
- sudo geth --datadir ./noeud2 --networkid="3" --port="1234" console &
- sudo geth --datadir ./noeud3 --networkid="3" --port="1234" console &
- sudo geth --datadir ./noeud4 --networkid="3" --port="1234" console &
 
 #geth --unlock <YOUR_ACCOUNT_ADDRESS> --password <YOUR_PASSWORD>
 
