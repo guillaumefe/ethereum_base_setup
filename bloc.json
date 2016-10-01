@@ -1,9 +1,0 @@
-{
-    "nonce":"0x00",
-    "difficulty":"0x1000",
-    "mixHash":"0x00",
-    "timestamp":"0x00",
-    "parentHash":"0x00",
-    "extraData":"0x00",
-    "gasLimit":"0x1000000"
-}
